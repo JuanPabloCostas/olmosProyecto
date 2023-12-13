@@ -5,14 +5,7 @@ const generateName = require('./randomname')
 
 // Crear una instancia de multer
 let processForm = multer({ 
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './src/data');
-    },
-    filename: function (req, file, cb) {
-      cb(null, generateName(file.originalname));
-    }
-  })
+  storage: multer.memoryStorage(),
 }).fields([
   { name: 'file1', maxCount: 1 },
   { name: 'file2', maxCount: 1},

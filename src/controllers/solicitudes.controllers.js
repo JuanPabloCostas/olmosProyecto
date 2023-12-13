@@ -1,6 +1,8 @@
 const connection = require('../config/config');
 
 const processForm = require('../middleware/ProcessFile')
+const uploadToAzureStorage = require('../middleware/upload')
+const generateName = require('../middleware/randomname')
 
 // Función para obtener todas las solicitudes
 const getSolicitudes = async(req, res) => {
@@ -33,23 +35,34 @@ const createSolicitud = async(req, res) => {
             req.files['file3'][0],
         ]
 
+        // Change the name of the files
+        files[0].originalname = generateName(files[0].originalname);
+        files[1].originalname = generateName(files[1].originalname);
+        files[2].originalname = generateName(files[2].originalname);
+
+
+        // Subir los archivos a Azure Storage
+        await uploadToAzureStorage(files[0]);
+        await uploadToAzureStorage(files[1]);
+        await uploadToAzureStorage(files[2]);
+
         // Crear un nuevo objeto de solicitud con los datos recibidos
         const newSolicitud = [
             expediente,
-            files[0].filename,
-            files[1].filename,
-            files[2].filename,
+            files[0].originalname,
+            files[1].originalname,
+            files[2].originalname,
             0,
         ]
 
         // Insertar la nueva solicitud en la base de datos
         connection.query('INSERT INTO solicitudes (expediente, file1, file2, file3, status) VALUES (?, ?, ?, ?, ?)', newSolicitud, (err, result) => {
             if (err) throw err;
-            res.status(200).json({message: 'Solicitud creada con éxito'});
+            return res.status(200).json({message: 'Solicitud creada con éxito'});
         });
     } catch (error) {
         console.log(error);
-        res.status(500).json({message: 'Error al crear la solicitud'});
+        return res.status(500).json({message: 'Error al crear la solicitud'});
     }
 }
 
