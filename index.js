@@ -39,8 +39,8 @@ app.use('/universidades', require('./src/routes/universidades.routes'));
 // Rutas para el recurso "solicitudes"
 app.use('/solicitudes', require('./src/routes/solicitudes.routes'));
 
-// Enviar archivos en la carpeta 'src/data'
-app.use('/data', express.static('./src/data'));
+// Rutas para el recurso "auth"
+app.use('/login', require('./src/routes/auth.routes'));
 
 // Iniciar el servidor en el puerto especificado
 app.listen(port, () => {

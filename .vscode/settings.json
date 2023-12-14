@@ -3,5 +3,7 @@
         "activityBar.background": "#013526",
         "titleBar.activeBackground": "#014A35",
         "titleBar.activeForeground": "#E8FFF8"
-    }
+    },
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/649f683a-c9e5-495b-86fc-5a65ba0a2011/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/mauAzureApp",
+    "appService.deploySubpath": "."
 }

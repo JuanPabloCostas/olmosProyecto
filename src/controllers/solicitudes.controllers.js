@@ -8,7 +8,7 @@ const generateName = require('../middleware/randomname')
 const getSolicitudes = async(req, res) => {
     connection.query('SELECT * FROM solicitudes', (err, result) => {
         if (err) throw err;
-        res.status(200).json(result);
+        return res.status(200).json(result);
     });
 };
 
